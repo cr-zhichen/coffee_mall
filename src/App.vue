@@ -1,26 +1,52 @@
-<template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
-</template>
+<script setup>
+import {ref} from "vue";
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
+import BannerAdvertis from './components/Components/BannerAdvertis.vue'
+import LogoComponents from './components/Components/LogoComponents.vue'
+import SearchComponents from './components/Components/SearchComponents.vue'
+import PageSwitch from './components/Components/PageSwitch.vue'
+import FooterComponents from './components/Components/FooterComponents.vue'
+import HomePageComponents from './components/Page/HomePageComponents.vue'
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+const page = ref(0);
+const searchValue = ref("");
+
+
 </script>
 
+
+<template>
+
+  <!-- Banner图 -->
+  <BannerAdvertis></BannerAdvertis>
+
+  <!-- Logo和搜索框 -->
+  <div id="title">
+    <LogoComponents></LogoComponents>
+    <SearchComponents @search="(msg) => searchValue = msg"></SearchComponents>
+  </div>
+
+  <!-- 页面选择 -->
+  <PageSwitch @num="(msg) => page = msg"></PageSwitch>
+
+  <!-- TODO 主页面-->
+  <div id="page">
+    <HomePageComponents v-if="page === 0" :searchValue="searchValue"></HomePageComponents>
+  </div>
+
+  <!-- 页脚-->
+  <FooterComponents></FooterComponents>
+
+</template>
+
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+#title {
+  display: flex;
+  align-items: center;
+}
+
+#page {
+  margin-bottom: 50px;
 }
 </style>
